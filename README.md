@@ -6,7 +6,7 @@ May serve as a **fallback for your Android applications** if the GPS is unavaila
 
 # How to use? #
 
-That project expose a simple cloud endpoint:
+That App-Engine project expose a simple cloud endpoint:
 
 ```
 $ curl https://<projectid>.appspot.com/_ah/api/api/v1/iplocation
