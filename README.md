@@ -1,4 +1,4 @@
-Simple (and fast) Google App-Engine API project to determine the coordinates, city, region and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code based on caller's IP. May serve as a fallback for your Android applications if the GPS is unavailable.
+Simple (and fast) Google App-Engine API project to determine the coordinates, city, region and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code based on caller's IP address. May serve as a fallback for your Android applications if the GPS is unavailable.
 
 ![](https://github.com/renaudcerrato/ip2location/raw/master/art/screenshot.png)
 
