@@ -4,9 +4,25 @@ May serve as a **fallback for your Android applications** if the GPS is unavaila
 
 ![](https://github.com/renaudcerrato/ip2location/raw/master/art/screenshot.png)
 
+# How to use? #
+
+That project expose a simple cloud endpoint:
+
+```
+$ curl https://<projectid>.appspot.com/_ah/api/api/v1/iplocation
+{
+ "latitude": 40.714353,
+ "longitude": -74.005973,
+ "country": "US",
+ "city": "new york",
+ "region": "ny",
+ "ip": "31.6.43.126",
+}
+```
+
 # How it works? #
 
-As a service to the app, App Engine adds the [following headers](https://cloud.google.com/appengine/docs/java/requests#Java_Request_headers) to all requests:
+As a service to the app, App Engine adds [some custom headers](https://cloud.google.com/appengine/docs/java/requests#Java_Request_headers) to every incoming requests: 
 
 ### X-AppEngine-Country
 
@@ -22,20 +38,6 @@ Name of the city from which the request originated. For example, a request from 
 ### X-AppEngine-CityLatLong 
 
 Latitude and longitude of the city from which the request originated. This string might look like "37.386051,-122.083851" for a request from Mountain View.
-
-
-That RESTful API simply expose those headers and return them in JSON format: 
-
-```
-{
- "latitude": 40.714353,
- "longitude": -74.005973,
- "country": "US",
- "city": "new york",
- "region": "ny",
- "ip": "31.6.43.126",
-}
-```
 
 
 
