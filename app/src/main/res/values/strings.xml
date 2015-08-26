@@ -2,4 +2,5 @@
     <string name="app_name">ip2location demo</string>
     <string name="title_activity_maps">@string/app_name</string>
     <string name="snackbar_action_retry">Retry</string>
+    <string name="snackbar_action_refresh">Refresh</string>
 </resources>

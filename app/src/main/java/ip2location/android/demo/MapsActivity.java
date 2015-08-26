@@ -29,6 +29,12 @@ public class MapsActivity extends FragmentActivity {
     public static final int DEFAULT_ZOOM = 12;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private Runnable retryRunnable = new Runnable() {
+        @Override
+        public void run() {
+            setUpMap();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +70,21 @@ public class MapsActivity extends FragmentActivity {
         new GetLocation() {
             @Override
             protected void onError(Exception exception) {
-                showMessage(exception.getMessage(), R.string.snackbar_action_retry, new Runnable() {
-                    @Override
-                    public void run() {
-                        setUpMap();
-                    }
-                });
-
+                showMessage(exception.getMessage(), R.string.snackbar_action_retry, retryRunnable);
             }
 
             @Override
             protected void onSuccess(IPLocation loc) {
+
+                mMap.clear();
+
+                if(loc.getLatitude() == 0 && loc.getLongitude() == 0)
+                    showMessage("Can't find latitude/longitude for " + loc.getIp(),
+                            R.string.snackbar_action_refresh, retryRunnable);
+                else
+                    showMessage(loc.getIp() + " (" + loc.getCity() + ", " + loc.getCountry() + ")",
+                            R.string.snackbar_action_refresh, retryRunnable);
+
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(loc.getLatitude(), loc.getLongitude()))
                         .title(loc.getIp())
