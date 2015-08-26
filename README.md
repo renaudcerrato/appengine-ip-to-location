@@ -1,5 +1,7 @@
 Simple (and fast) Google App-Engine API project to determine the city and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code based on caller's IP.
 
+May serve as a fallback for your Android applications if the GPS is unavailable.
+
 # How it works? #
 
 As a service to the app, App Engine adds the [following headers](https://cloud.google.com/appengine/docs/java/requests#Java_Request_headers) to all requests:
@@ -20,6 +22,18 @@ Name of the city from which the request originated. For example, a request from 
 Latitude and longitude of the city from which the request originated. This string might look like "37.386051,-122.083851" for a request from Mountain View.
 
 
+The API simply expose those headers through a RESTful API and returns them in JSON: 
+
+```
+{
+ "latitude": 40.714353,
+ "longitude": -74.005973,
+ "country": "US",
+ "city": "new york",
+ "region": "ny",
+ "ip": "31.6.43.126",
+}
+```
 
 
 
