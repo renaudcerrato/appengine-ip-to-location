@@ -1,16 +1,25 @@
-Simple (and fast) Google App-Engine API project to determine the city, coordinates,  region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)) and the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code based on caller's IP address. 
+Simple (and fast) Google App-Engine application to fetch the city, coordinates, region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)) and the country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) based on caller's IP address.
 
-May serve as a **fallback for your Android applications** if the GPS is unavailable (or deactivated).
+   * [Why ?](#why-)
+   * [Usage](#usage)
+   * [How does it work?](#how-does-it-work-)
+   * [Prerequisites](#prerequisites)
+   * [Deployment](#deployment)
+   * [License](#license)
+   
+# Why?
 
-# How to use? #
+The primary usage is to provide your application(s) a **fallback** if the geolocation is unavailable (or denied).
 
-That App-Engine project expose a simple cloud endpoint:
+# Usage
+
+That App-Engine application expose a simple endpoint:
 
 ```
-$ curl https://<projectid>.appspot.com/_ah/api/api/v1/iplocation
+$ curl https://<your-project-id>.appspot.com/api/v1/geocoder
 {
- "latitude": 40.714353,
- "longitude": -74.005973,
+ "lat": 40.714353,
+ "long": -74.005973,
  "country": "US",
  "city": "new york",
  "region": "ny",
@@ -18,9 +27,11 @@ $ curl https://<projectid>.appspot.com/_ah/api/api/v1/iplocation
 }
 ```
 
-# How it works? #
+# How does it work?
 
-As a service to the app, App Engine adds [some custom headers](https://cloud.google.com/appengine/docs/java/requests#Java_Request_headers) to every incoming requests: 
+The application simply forwards App Engine [geolocation headers](https://cloud.google.com/appengine/docs/standard/java/reference/request-response-headers#app_engine-specific_headers) to the caller in a JSON format.
+
+Here's the details about the headers returned:
 
 ### X-AppEngine-Country
 
@@ -37,10 +48,66 @@ Name of the city from which the request originated. For example, a request from 
 
 Latitude and longitude of the city from which the request originated. This string might look like "37.386051,-122.083851" for a request from Mountain View.
 
-# Setup #
+# Prerequisites #
 
-Build -> Deploy Module to App Engine... 
+### Create a new Project
+First of all, you'll need to go to your [Google Cloud console](https://console.cloud.google.com/projectselector/appengine/create?lang=java&st=true) to create a new App Engine application: 
 
+![](https://i.imgur.com/WMVMHa3.png)
+
+
+### Setup the Google Cloud SDK
+
+Follow the [official documentation](https://cloud.google.com/sdk/docs/) to install the latest Google Cloud SDK. As a shorthand, you'll find below the Ubuntu/Debian instructions:
+
+
+```bash
+$ export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+$ echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+$ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+$ sudo apt-get update && sudo apt-get install google-cloud-sdk
+```
+
+Do not forget to install the `app-engine-java` [component](https://cloud.google.com/sdk/docs/components#external_package_managers). If you installed the Google Cloud SDK using `apt-get`, it's as simple as:
+
+```bash
+$ sudo apt-get install google-cloud-sdk-app-engine-java
+```
+
+As a last step, configure the `gcloud` command line environment and select your newly created App Engine project when requested to do so:
+
+```bash
+$ gcloud init
+$ gcloud auth application-default login
+```
+# Deployment
+
+Clone (or [download](https://github.com/renaudcerrato/appengine-ip-to-location/archive/master.zip)) the source code, and deploy:
+
+```bash
+$ git clone https://github.com/renaudcerrato/appengine-ip-to-location.git
+$ cd appengine-ip-to-location
+$ ./gradlew appengineDeploy
+```
+
+
+# License
+
+```
+Copyright 2018 Cerrato Renaud
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
 
 
 
