@@ -1,12 +1,12 @@
-# App-Engine IP Geocoder Microservice
+# App-Engine IP Geocoding Microservice
 
 Simple (and fast) Google App-Engine application to fetch the city, coordinates, region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)) and the country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) based on caller's IP address.
 
    * [Why ?](#why)
    * [Usage](#usage)
-   * [How does it work?](#how-does-it-work)
    * [Prerequisites](#prerequisites)
    * [Deployment](#deployment)
+   * [How does it work?](#how-does-it-work)
    * [License](#license)
    
 # Why?
@@ -15,7 +15,7 @@ The primary usage is to provide your application(s) a **fallback** if the geoloc
 
 # Usage
 
-That App-Engine application expose a simple endpoint:
+The application exposes a simple endpoint:
 
 ```
 $ curl https://<your-project-id>.appspot.com/api/v1/geocoder
@@ -28,27 +28,6 @@ $ curl https://<your-project-id>.appspot.com/api/v1/geocoder
  "ip": "31.6.43.126",
 }
 ```
-
-# How does it work?
-
-The application simply forwards App Engine [geolocation headers](https://cloud.google.com/appengine/docs/standard/java/reference/request-response-headers#app_engine-specific_headers) to the caller in a JSON format.
-
-Here's the details about the headers returned:
-
-### X-AppEngine-Country
-
-Country from which the request originated, as an ISO 3166-1 alpha-2 country code. App Engine determines this code from the client's IP address. Note that the country information is not derived from the WHOIS database; it's possible that an IP address with country information in the WHOIS database will not have country information in the X-AppEngine-Country header. Your application should handle the special country code ZZ (unknown country).
-
-### X-AppEngine-Region 
-Name of region from which the request originated. This value only makes sense in the context of the country in X-AppEngine-Country. For example, if the country is "US" and the region is "ca", that "ca" means "California", not Canada. The complete list of valid region values is found in the ISO-3166-2 standard.
-
-### X-AppEngine-City 
-
-Name of the city from which the request originated. For example, a request from the city of Mountain View might have the header value mountain view. There is no canonical list of valid values for this header.
-
-### X-AppEngine-CityLatLong 
-
-Latitude and longitude of the city from which the request originated. This string might look like "37.386051,-122.083851" for a request from Mountain View.
 
 # Prerequisites #
 
@@ -92,6 +71,26 @@ $ cd appengine-ip-to-location
 $ ./gradlew appengineDeploy
 ```
 
+# How does it work?
+
+The application simply forwards App Engine [geolocation headers](https://cloud.google.com/appengine/docs/standard/java/reference/request-response-headers#app_engine-specific_headers) to the caller in a JSON format.
+
+Here's the details about the headers returned:
+
+### X-AppEngine-Country
+
+Country from which the request originated, as an ISO 3166-1 alpha-2 country code. App Engine determines this code from the client's IP address. Note that the country information is not derived from the WHOIS database; it's possible that an IP address with country information in the WHOIS database will not have country information in the X-AppEngine-Country header. **Your application should handle the special country code ZZ (unknown country)**.
+
+### X-AppEngine-Region 
+Name of region from which the request originated. This value only makes sense in the context of the country in X-AppEngine-Country. For example, if the country is "US" and the region is "ca", that "ca" means "California", not Canada. The complete list of valid region values is found in the ISO-3166-2 standard.
+
+### X-AppEngine-City 
+
+Name of the city from which the request originated. For example, a request from the city of Mountain View might have the header value mountain view. There is no canonical list of valid values for this header.
+
+### X-AppEngine-CityLatLong 
+
+Latitude and longitude of the city from which the request originated. This string might look like "37.386051,-122.083851" for a request from Mountain View.
 
 # License
 
