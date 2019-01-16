@@ -11,11 +11,11 @@ Simple (and fast) Google App-Engine application to fetch the city, coordinates, 
    
 # Why?
 
-The primary usage is to provide your application(s) a **fallback** if the geolocation is unavailable (or denied).
+The primary usage is to provide your application(s) a **fallback** (or best effort) if the geolocation is unavailable.
 
 # Usage
 
-The application exposes a simple endpoint:
+The application exposes a single endpoint that will return the caller's geolocation based on its IP address:
 
 ```bash
 $ curl https://<your-project-id>.appspot.com/api/v1/geocoder
