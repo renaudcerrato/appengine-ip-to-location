@@ -2,8 +2,6 @@ Simple (and fast) Google App-Engine API project to determine the city, coordinat
 
 May serve as a **fallback for your Android applications** if the GPS is unavailable (or deactivated).
 
-![](https://github.com/renaudcerrato/ip2location/raw/master/art/screenshot.png)
-
 # How to use? #
 
 That App-Engine project expose a simple cloud endpoint:
