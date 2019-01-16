@@ -17,7 +17,7 @@ The primary usage is to provide your application(s) a **fallback** if the geoloc
 
 The application exposes a simple endpoint:
 
-```
+```bash
 $ curl https://<your-project-id>.appspot.com/api/v1/geocoder
 {
  "lat": 40.714353,
