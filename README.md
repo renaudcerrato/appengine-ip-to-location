@@ -1,8 +1,8 @@
 Simple (and fast) Google App-Engine application to fetch the city, coordinates, region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)) and the country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)) based on caller's IP address.
 
-   * [Why ?](#why-)
+   * [Why ?](#why)
    * [Usage](#usage)
-   * [How does it work?](#how-does-it-work-)
+   * [How does it work?](#how-does-it-work)
    * [Prerequisites](#prerequisites)
    * [Deployment](#deployment)
    * [License](#license)
